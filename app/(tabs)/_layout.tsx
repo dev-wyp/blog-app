@@ -1,37 +1,69 @@
 import { Tabs } from 'expo-router';
-import React from 'react';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { Searchbar } from 'react-native-paper';
+import { useState } from 'react';
 
-import { TabBarIcon } from '@/components/navigation/TabBarIcon';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
+export default () => {
+  const [searchQuery, setSearchQuery] = useState('');
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-      }}>
+    <Tabs>
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+          tabBarLabel: 'Home',
+          headerTitle: ({}) => (
+            <Searchbar
+              style={{ width: '100%' }}
+              placeholder="Search Restaurants"
+              onChangeText={setSearchQuery}
+              value={searchQuery}
+            />
+          ),
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome5 name="home" size={size} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="discover"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
+          tabBarLabel: 'Discover',
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome5 name="compass" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="wishlist"
+        options={{
+          tabBarLabel: 'Wishlist',
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome5 name="heart" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="list"
+        options={{
+          tabBarLabel: 'News',
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome5 name="newspaper" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          tabBarLabel: 'Account',
+          headerTitle: 'My Account',
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome5 name="user" size={size} color={color} />
           ),
         }}
       />
     </Tabs>
   );
-}
+};
